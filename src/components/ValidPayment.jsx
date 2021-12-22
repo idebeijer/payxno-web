@@ -1,12 +1,16 @@
 import { Box, Button, Container, Grid, InputAdornment, Paper, TextField } from "@mui/material";
 import React from "react";
-import { useParams, useSearchParams } from "react-router-dom";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getNanoPrice } from "../utils/getNanoPrice";
 import { megaToRaw, rawToMega } from "nano-unit-converter";
 import { getSendURI } from "nano-uri-generator";
-import QRCode from "qrcode.react";
+import QRCode from "qrcode";
+
+import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 
 export const ValidPayment = () => {
+  const navigate = useNavigate();
+
   const [searchParams, setSearchParams] = useSearchParams();
   const amount = searchParams.get("amount");
   let params = useParams();
@@ -22,21 +26,39 @@ export const ValidPayment = () => {
 
   const sendURI = getSendURI(params.address, megaToRaw(amount));
 
+  const [qrcodeSrc, setQrcodeSrc] = React.useState("");
+
+  React.useEffect(() => {
+    QRCode.toDataURL(sendURI, {
+      width: 600,
+      margin: 0,
+    }).then((url) => {
+      setQrcodeSrc(url);
+    });
+  }, []);
+
   return (
     <Container maxWidth="xs">
-      <Paper>
-        <Grid container spacing={2} direction="column" sx={{ padding: 2 }}>
+      <Paper sx={{ maxWidth: 300, margin: "0 auto" }}>
+        <Grid container spacing={2} direction="column" sx={{ px: 2, pb: 2, mt: 5 }}>
           <Grid item>
-            <h1>Home</h1>
+            <Button
+              variant="outlined"
+              startIcon={<ArrowBackIosNewRoundedIcon />}
+              onClick={() => navigate("/")}
+            >
+              Generate new
+            </Button>
           </Grid>
           <Grid item>
-            <Grid item container direction="row" wrap="nowrap">
+            <Grid item container direction="row" wrap="nowrap" sx={{ mb: 2 }}>
               <Grid item>
                 <TextField
                   id=""
                   value={amount}
                   variant="outlined"
                   fullWidth
+                  disabled
                   InputProps={{
                     endAdornment: <InputAdornment position="start">EUR</InputAdornment>,
                     readOnly: true,
@@ -49,6 +71,7 @@ export const ValidPayment = () => {
               <Grid item>
                 <TextField
                   id=""
+                  disabled
                   value={calcPrice(amount)}
                   variant="outlined"
                   fullWidth
@@ -62,6 +85,7 @@ export const ValidPayment = () => {
             <Grid item>
               <TextField
                 label="Address"
+                disabled
                 multiline
                 fullWidth
                 rows={4}
@@ -75,8 +99,9 @@ export const ValidPayment = () => {
           <Grid item>
             <Box>
               <React.Suspense fallback="loading...">
-                <Box>
-                  <QRCode value={sendURI} />
+                <Box padding={1} sx={{ backgroundColor: "white", borderRadius: 1 }}>
+                  {/* <QRCode bgColor="white" fgColor="black" size="300" value={sendURI} /> */}
+                  <img width="100%" src={qrcodeSrc}></img>
                 </Box>
               </React.Suspense>
             </Box>

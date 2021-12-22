@@ -2,7 +2,7 @@ import React from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./views/Home";
-import { createTheme, ThemeProvider } from "@mui/material";
+import { createTheme, GlobalStyles, ThemeProvider, Paper } from "@mui/material";
 import { SnackbarProvider } from "notistack";
 import { Link as RouterLink } from "react-router-dom";
 import PropTypes from "prop-types";
@@ -20,7 +20,7 @@ LinkBehavior.propTypes = {
 function App() {
   const theme = createTheme({
     palette: {
-      mode: "light",
+      mode: "dark",
       primary: {
         main: "#0070c1",
         light: "#0085e3",
@@ -54,12 +54,15 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <SnackbarProvider>
-        <Routes>
-          <Route path="/">
-            <Route index element={<Home />} />
-            <Route exact path=":address" element={<PaymentPage />} />
-          </Route>
-        </Routes>
+        <GlobalStyles styles={{ body: { backgroundColor: theme.palette.background.default } }} />
+        <Paper elevation={0}>
+          <Routes>
+            <Route path="/">
+              <Route index element={<Home />} />
+              <Route exact path=":address" element={<PaymentPage />} />
+            </Route>
+          </Routes>
+        </Paper>
       </SnackbarProvider>
     </ThemeProvider>
   );

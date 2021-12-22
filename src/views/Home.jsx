@@ -7,6 +7,7 @@ import {
   TextField,
   Snackbar,
   Alert,
+  Typography,
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
@@ -54,15 +55,17 @@ export const Home = () => {
   return (
     <>
       <Container maxWidth="xs">
-        <Paper>
-          <Grid container spacing={2} direction="column" sx={{ padding: 2 }}>
-            <Grid item>
-              <h1>Home</h1>
+        <Paper sx={{ maxWidth: 300, margin: "0 auto" }}>
+          <Grid container spacing={2} direction="column" sx={{ px: 2, pb: 2, mt: 5 }}>
+            <Grid item textAlign="center">
+              <Typography variant="h3">ӾNO</Typography>
             </Grid>
             <Grid item>
               <TextField
+                sx={{ mb: 2 }}
                 id=""
                 variant="outlined"
+                fullWidth
                 type="tel"
                 onChange={(e) => setValues({ ...values, amount: e.target.value })}
                 InputProps={{
@@ -73,13 +76,14 @@ export const Home = () => {
                 <TextField
                   label="Address"
                   multiline
+                  fullWidth
                   rows={4}
                   onChange={(e) => setValues({ ...values, address: e.target.value })}
                 />
               </Grid>
             </Grid>
             <Grid item>
-              <Button variant="contained" onClick={handleSubmit}>
+              <Button fullWidth variant="contained" onClick={handleSubmit}>
                 Generate
               </Button>
               <Snackbar
