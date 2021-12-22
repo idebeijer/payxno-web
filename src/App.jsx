@@ -2,11 +2,12 @@ import React from "react";
 import "./App.css";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "./views/Home";
-import { createTheme, GlobalStyles, ThemeProvider, Paper } from "@mui/material";
+import { createTheme, GlobalStyles, ThemeProvider, Paper, useMediaQuery, Box } from "@mui/material";
 import { SnackbarProvider } from "notistack";
 import { Link as RouterLink } from "react-router-dom";
 import PropTypes from "prop-types";
 import { PaymentPage } from "./views/PaymentPage";
+import { Navbar } from "./components/Navbar/Navbar";
 
 const LinkBehavior = React.forwardRef((props, ref) => {
   const { href, ...other } = props;
@@ -18,6 +19,7 @@ LinkBehavior.propTypes = {
 };
 
 function App() {
+  const standaloneMediaQuery = useMediaQuery("(display-mode: standalone)");
   const theme = createTheme({
     palette: {
       mode: "dark",
@@ -53,9 +55,11 @@ function App() {
 
   return (
     <ThemeProvider theme={theme}>
+      {standaloneMediaQuery ? <Box sx={{ height: 50 }}></Box> : <></>}
       <SnackbarProvider>
         <GlobalStyles styles={{ body: { backgroundColor: theme.palette.background.default } }} />
         <Paper elevation={0}>
+          <Navbar />
           <Routes>
             <Route path="/">
               <Route index element={<Home />} />

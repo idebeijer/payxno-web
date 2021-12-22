@@ -1,4 +1,13 @@
-import { Box, Button, Container, Grid, InputAdornment, Paper, TextField } from "@mui/material";
+import {
+  Box,
+  Button,
+  Container,
+  Divider,
+  Grid,
+  InputAdornment,
+  Paper,
+  TextField,
+} from "@mui/material";
 import React from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
 import { getNanoPrice } from "../utils/getNanoPrice";
@@ -30,8 +39,11 @@ export const ValidPayment = () => {
 
   React.useEffect(() => {
     QRCode.toDataURL(sendURI, {
-      width: 600,
+      width: 1000,
       margin: 0,
+      color: {
+        light: "#f0f0f0",
+      },
     }).then((url) => {
       setQrcodeSrc(url);
     });
@@ -39,18 +51,26 @@ export const ValidPayment = () => {
 
   return (
     <Container maxWidth="xs">
-      <Paper sx={{ maxWidth: 300, margin: "0 auto" }}>
-        <Grid container spacing={2} direction="column" sx={{ px: 2, pb: 2, mt: 5 }}>
-          <Grid item>
-            <Button
-              variant="outlined"
-              startIcon={<ArrowBackIosNewRoundedIcon />}
-              onClick={() => navigate("/")}
-            >
-              Generate new
-            </Button>
+      <Paper elevation={1} sx={{ maxWidth: 375, margin: "0 auto" }}>
+        <Grid container direction="column" sx={{ p: 2, pb: 2, mt: 5 }}>
+          <Grid item sx={{ pb: 2 }}>
+            <Box>
+              <React.Suspense fallback="loading...">
+                <Box
+                  padding={2}
+                  sx={{ backgroundColor: "#f0f0f0", borderRadius: 1, margin: "0 auto" }}
+                  width="60%"
+                >
+                  {/* <QRCode bgColor="white" fgColor="black" size="300" value={sendURI} /> */}
+                  <img width="100%" src={qrcodeSrc}></img>
+                </Box>
+              </React.Suspense>
+            </Box>
           </Grid>
-          <Grid item>
+          <Grid item sx={{ pb: 2 }}>
+            <Divider fullWidth variant="middle"></Divider>
+          </Grid>
+          <Grid item sx={{ pb: 2 }}>
             <Grid item container direction="row" wrap="nowrap" sx={{ mb: 2 }}>
               <Grid item>
                 <TextField
@@ -59,6 +79,7 @@ export const ValidPayment = () => {
                   variant="outlined"
                   fullWidth
                   disabled
+                  size="small"
                   InputProps={{
                     endAdornment: <InputAdornment position="start">EUR</InputAdornment>,
                     readOnly: true,
@@ -72,6 +93,7 @@ export const ValidPayment = () => {
                 <TextField
                   id=""
                   disabled
+                  size="small"
                   value={calcPrice(amount)}
                   variant="outlined"
                   fullWidth
@@ -84,10 +106,11 @@ export const ValidPayment = () => {
             </Grid>
             <Grid item>
               <TextField
-                label="Address"
+                label="Nano Address"
                 disabled
                 multiline
                 fullWidth
+                size="small"
                 rows={4}
                 value={params.address}
                 InputProps={{
@@ -97,14 +120,13 @@ export const ValidPayment = () => {
             </Grid>
           </Grid>
           <Grid item>
-            <Box>
-              <React.Suspense fallback="loading...">
-                <Box padding={1} sx={{ backgroundColor: "white", borderRadius: 1 }}>
-                  {/* <QRCode bgColor="white" fgColor="black" size="300" value={sendURI} /> */}
-                  <img width="100%" src={qrcodeSrc}></img>
-                </Box>
-              </React.Suspense>
-            </Box>
+            <Button
+              variant="outlined"
+              startIcon={<ArrowBackIosNewRoundedIcon />}
+              onClick={() => navigate("/")}
+            >
+              Generate new
+            </Button>
           </Grid>
         </Grid>
       </Paper>
