@@ -28,6 +28,7 @@ export const Home = () => {
   const [values, setValues] = React.useState({
     amount: "",
     address: "",
+    currency: "EUR",
   });
 
   const [snackbarState, setSnackbarState] = React.useState({
@@ -38,32 +39,24 @@ export const Home = () => {
   });
 
   const handleSubmit = () => {
-    if (isValid(values.address) && values.amount !== "") {
-      navigate(`/${values.address}?amount=${values.amount}`);
-    } else if (values.amount === "") {
-      handleSnackbar("invalidAmount");
+    if (isValid(values.address)) {
+      if (amount > 0) {
+        navigate(`/${values.address}?amount=${values.amount}&currency=${values.currency}`);
+      } else {
+        navigate(`/${values.address}`);
+      }
     } else {
-      handleSnackbar("invalidAddress");
+      handleSnackbar();
     }
   };
 
-  const handleSnackbar = (e) => {
-    switch (e) {
-      case "invalidAddress":
-        setSnackbarState({ ...snackbarState, open: true, message: "Invalid XNO address" });
-        break;
-      case "invalidAmount":
-        setSnackbarState({ ...snackbarState, open: true, message: "Invalid amount entered" });
-    }
+  const handleSnackbar = () => {
+    setSnackbarState({ ...snackbarState, open: true, message: "Invalid XNO address" });
   };
 
   const handleSnackbarClose = () => {
     setSnackbarState({ ...snackbarState, open: false });
   };
-
-  // const MinimalSelect = styled(Select)(({ theme }) => ({
-  //   border: "unset",
-  // }));
 
   return (
     <>
@@ -90,7 +83,12 @@ export const Home = () => {
                     }}
                   />
                   <Box>
-                    <Select defaultValue="EUR" size="small">
+                    <Select
+                      defaultValue="EUR"
+                      size="small"
+                      value={values.currency}
+                      onChange={(e) => setValues({ ...values, currency: e.target.value })}
+                    >
                       <MenuItem value={"EUR"}>EUR</MenuItem>
                       <MenuItem value={"USD"}>USD</MenuItem>
                       <MenuItem value={"XNO"}>XNO</MenuItem>

@@ -4,13 +4,8 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { getNanoPrice } from "../utils/getNanoPrice";
 import isValid from "nano-address-validator";
 
-import { ValidPayment } from "../components/ValidPayment";
+import { ValidPayment } from "../components/Validpayment/ValidPayment";
 import { InvalidPayment } from "../components/InvalidPayment";
-// const [nanoPrice, setNanoPrice] = React.useState(null);
-// getNanoPrice().then(function (response) {
-//   // setNanoPrice(response);
-//   console.log(response);
-// });
 
 export const PaymentPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
