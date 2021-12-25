@@ -15,7 +15,7 @@ import { megaToRaw, rawToMega } from "nano-unit-converter";
 import { getSendURI } from "nano-uri-generator";
 import QRCode from "qrcode";
 
-import AmountCard from "./AmountCard";
+import { AmountCard } from "./AmountCard";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 
 export const ValidPayment = () => {
