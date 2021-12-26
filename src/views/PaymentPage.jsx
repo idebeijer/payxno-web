@@ -4,7 +4,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { getNanoPrice } from "../utils/getNanoPrice";
 import isValid from "nano-address-validator";
 
-import { ValidPayment } from "../components/Validpayment/ValidPayment";
+import { ValidPayment } from "../components/Validpayment";
 import { InvalidPayment } from "../components/InvalidPayment";
 
 export const PaymentPage = () => {
