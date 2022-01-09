@@ -1,11 +1,13 @@
 {
-  "name": "vite-project",
+  "name": "payxno",
+  "homepage": "https://idebeijer.github.io/payxno-web/",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
-    "build": "vite build",
     "preview": "vite preview",
-    "devhost": "vite --host"
+    "devhost": "vite --host",
+    "predeploy": "vite build",
+    "deploy": "gh-pages -d build"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
@@ -14,6 +16,7 @@
     "@mui/material": "^5.2.5",
     "@mui/styles": "^5.2.3",
     "axios": "^0.24.0",
+    "gh-pages": "^3.2.3",
     "nano-address-validator": "^3.0.0",
     "nano-unit-converter": "^2.0.0",
     "nano-uri-generator": "^2.0.1",
