@@ -40,7 +40,7 @@ export const Home = () => {
 
   const handleSubmit = () => {
     if (isValid(values.address)) {
-      if (amount > 0) {
+      if (values.amount > 0) {
         navigate(`/${values.address}?amount=${values.amount}&currency=${values.currency}`);
       } else {
         navigate(`/${values.address}`);

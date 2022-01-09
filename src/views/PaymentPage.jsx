@@ -4,22 +4,29 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { getNanoPrice } from "../utils/getNanoPrice";
 import isValid from "nano-address-validator";
 
-import { ValidPayment } from "../components/Validpayment";
+import { ValidPayment } from "../components/Validpayment/index";
 import { InvalidPayment } from "../components/InvalidPayment";
 
 export const PaymentPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
-  const amount = searchParams.get("amount");
-
-  const checkParams = () => {
-    if (amount !== null && isValid(params.address)) {
-      return true;
-    } else {
-      return false;
-    }
-  };
-
   let params = useParams();
-  console.log(amount);
-  return <>{checkParams() ? <ValidPayment /> : <InvalidPayment />}</>;
+  const amount = searchParams.get("amount");
+  const currency = searchParams.get("currency");
+
+  if (amount > 0 && ["EUR", "XNO", "USD"].indexOf(currency) >= 0 && isValid(params.address)) {
+    console.log("1");
+    return (
+      <ValidPayment
+        amountIsSet={true}
+        currency={currency}
+        amount={amount}
+        address={params.address}
+      />
+    );
+  } else if (isValid(params.address) && !currency && !amount) {
+    console.log("2");
+    return <ValidPayment amountIsSet={false} address={params.address} />;
+  } else {
+    return <InvalidPayment />;
+  }
 };

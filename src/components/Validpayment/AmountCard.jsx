@@ -17,20 +17,27 @@ import QRCode from "qrcode";
 
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 
-export const AmountCard = () => {
+export const AmountCard = (props) => {
   const navigate = useNavigate();
 
   const [searchParams, setSearchParams] = useSearchParams();
-  const amount = searchParams.get("amount");
   let params = useParams();
 
-  const calcPrice = (amount) => {
-    const [nanoPrice, setNanoPrice] = React.useState("");
-    getNanoPrice().then(function (response) {
-      setNanoPrice(response.nano.eur);
-    });
+  const amount = props.amount;
+  const currency = props.currency;
 
-    return amount * nanoPrice;
+  const calcPrice = (amount) => {
+    if (currency == "XNO") {
+      return amount;
+    } else {
+      const [nanoPrice, setNanoPrice] = React.useState("");
+      getNanoPrice(currency).then(function (response) {
+        // console.log(response.nano[`${currency.toLowerCase()}`]);
+        setNanoPrice(response.nano[`${currency.toLowerCase()}`]);
+      });
+
+      return amount / nanoPrice;
+    }
   };
 
   const sendURI = getSendURI(params.address, megaToRaw(amount));
@@ -66,7 +73,7 @@ export const AmountCard = () => {
         </Box>
       </Grid>
       <Grid item sx={{ pb: 2 }}>
-        <Divider fullWidth variant="middle"></Divider>
+        <Divider variant="middle"></Divider>
       </Grid>
       <Grid item sx={{ pb: 2 }}>
         <Grid item container direction="row" wrap="nowrap" sx={{ mb: 2 }}>
@@ -79,28 +86,34 @@ export const AmountCard = () => {
               disabled
               size="small"
               InputProps={{
-                endAdornment: <InputAdornment position="start">EUR</InputAdornment>,
+                endAdornment: <InputAdornment position="start">{props.currency}</InputAdornment>,
                 readOnly: true,
               }}
             />
           </Grid>
-          <Grid item alignSelf="center">
-            <Box sx={{ px: 1 }}>~</Box>
-          </Grid>
-          <Grid item>
-            <TextField
-              id=""
-              disabled
-              size="small"
-              value={calcPrice(amount)}
-              variant="outlined"
-              fullWidth
-              InputProps={{
-                endAdornment: <InputAdornment position="start">XNO</InputAdornment>,
-                readOnly: true,
-              }}
-            />
-          </Grid>
+          {currency == "XNO" ? (
+            <></>
+          ) : (
+            <>
+              <Grid item alignSelf="center">
+                <Box sx={{ px: 1 }}>~</Box>
+              </Grid>
+              <Grid item>
+                <TextField
+                  id=""
+                  disabled
+                  size="small"
+                  value={calcPrice(amount)}
+                  variant="outlined"
+                  fullWidth
+                  InputProps={{
+                    endAdornment: <InputAdornment position="start">XNO</InputAdornment>,
+                    readOnly: true,
+                  }}
+                />
+              </Grid>
+            </>
+          )}
         </Grid>
         <Grid item>
           <TextField

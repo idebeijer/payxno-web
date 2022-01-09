@@ -17,14 +17,12 @@ import QRCode from "qrcode";
 
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 
-export const NoAmountCard = () => {
+export const NoAmountCard = (props) => {
   const navigate = useNavigate();
 
-  const [searchParams, setSearchParams] = useSearchParams();
-  const amount = searchParams.get("amount");
   let params = useParams();
 
-  const sendURI = getSendURI(params.address, megaToRaw(amount));
+  const sendURI = getSendURI(params.address);
 
   const [qrcodeSrc, setQrcodeSrc] = React.useState("");
 
@@ -57,7 +55,7 @@ export const NoAmountCard = () => {
         </Box>
       </Grid>
       <Grid item sx={{ pb: 2 }}>
-        <Divider fullWidth variant="middle"></Divider>
+        <Divider variant="middle"></Divider>
       </Grid>
       <Grid item sx={{ pb: 2 }}>
         <Grid item>
