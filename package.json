@@ -16,7 +16,6 @@
     "@mui/material": "^5.2.5",
     "@mui/styles": "^5.2.3",
     "axios": "^0.24.0",
-    "gh-pages": "^3.2.3",
     "nano-address-validator": "^3.0.0",
     "nano-unit-converter": "^2.0.0",
     "nano-uri-generator": "^2.0.1",
@@ -30,6 +29,7 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.7",
+    "gh-pages": "^3.2.3",
     "prettier": "^2.5.1"
   },
   "resolutions": {
