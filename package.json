@@ -4,10 +4,9 @@
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
+    "build": "vite build",
     "preview": "vite preview",
-    "devhost": "vite --host",
-    "predeploy": "vite build",
-    "deploy": "gh-pages -d build"
+    "devhost": "vite --host"
   },
   "dependencies": {
     "@emotion/react": "^11.7.1",
@@ -29,7 +28,6 @@
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^1.0.7",
-    "gh-pages": "^3.2.3",
     "prettier": "^2.5.1"
   },
   "resolutions": {
