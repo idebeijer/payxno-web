@@ -104,9 +104,11 @@ export const Home = () => {
                   <Grid item>
                     <Typography variant="subtitle1">Nano Address</Typography>
                   </Grid>
-                  <Grid item>
-                    <Button size="small">Paste</Button>
-                  </Grid>
+                  {/* <Grid item>
+                    <Button onClick={pasteFromClipboard()} size="small">
+                      Paste
+                    </Button>
+                  </Grid> */}
                 </Grid>
                 <Grid item>
                   <TextField

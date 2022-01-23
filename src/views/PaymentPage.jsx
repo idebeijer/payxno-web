@@ -11,7 +11,11 @@ export const PaymentPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   let params = useParams();
   const amount = searchParams.get("amount");
-  const currency = searchParams.get("currency");
+  var currency = null;
+
+  if (searchParams.get(currency)) {
+    currency = searchParams.get("currency").toUpperCase();
+  }
 
   if (amount > 0 && ["EUR", "XNO", "USD"].indexOf(currency) >= 0 && isValid(params.address)) {
     console.log("1");
