@@ -32,7 +32,6 @@ export const AmountCard = (props) => {
     } else {
       const [nanoPrice, setNanoPrice] = React.useState("");
       getNanoPrice(currency).then(function (response) {
-        // console.log(response.nano[`${currency.toLowerCase()}`]);
         setNanoPrice(response.nano[`${currency.toLowerCase()}`]);
       });
 

@@ -11,14 +11,13 @@ export const PaymentPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
   let params = useParams();
   const amount = searchParams.get("amount");
-  var currency = null;
+  var currency;
 
-  if (searchParams.get(currency)) {
+  if (searchParams.get("currency")) {
     currency = searchParams.get("currency").toUpperCase();
   }
 
   if (amount > 0 && ["EUR", "XNO", "USD"].indexOf(currency) >= 0 && isValid(params.address)) {
-    console.log("1");
     return (
       <ValidPayment
         amountIsSet={true}
@@ -28,7 +27,6 @@ export const PaymentPage = () => {
       />
     );
   } else if (isValid(params.address) && !currency && !amount) {
-    console.log("2");
     return <ValidPayment amountIsSet={false} address={params.address} />;
   } else {
     return <InvalidPayment />;
