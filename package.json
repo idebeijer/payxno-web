@@ -1,6 +1,6 @@
 {
   "name": "payxno",
-  "homepage": "https://idebeijer.github.io/payxno-web/",
+  "homepage": "",
   "version": "0.0.0",
   "scripts": {
     "dev": "vite",
