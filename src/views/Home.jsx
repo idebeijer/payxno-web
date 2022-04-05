@@ -5,13 +5,11 @@ import {
   InputAdornment,
   Paper,
   TextField,
-  Snackbar,
   Alert,
   Typography,
   Select,
   useTheme,
   MenuItem,
-  NativeSelect,
   useMediaQuery,
   Divider,
 } from "@mui/material";
@@ -19,23 +17,18 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import isValid from "nano-address-validator";
 import { Box, styled } from "@mui/system";
+import { useSnackbar } from "notistack";
 
 export const Home = () => {
   const standaloneMediaQuery = useMediaQuery("(display-mode: standalone)");
   const navigate = useNavigate();
+  const { enqueueSnackbar } = useSnackbar();
   const theme = useTheme();
 
   const [values, setValues] = React.useState({
     amount: "",
     address: "",
     currency: "EUR",
-  });
-
-  const [snackbarState, setSnackbarState] = React.useState({
-    open: false,
-    vertical: "top",
-    horizontal: "center",
-    message: "",
   });
 
   const handleSubmit = () => {
@@ -46,22 +39,14 @@ export const Home = () => {
         navigate(`/${values.address}`);
       }
     } else {
-      handleSnackbar();
+      enqueueSnackbar("Invalid Nano address", { variant: "error" });
     }
-  };
-
-  const handleSnackbar = () => {
-    setSnackbarState({ ...snackbarState, open: true, message: "Invalid XNO address" });
-  };
-
-  const handleSnackbarClose = () => {
-    setSnackbarState({ ...snackbarState, open: false });
   };
 
   return (
     <>
       <Container maxWidth="xs">
-        <Paper elevation={1} sx={{ maxWidth: 375, margin: "0 auto" }}>
+        <Paper elevation={2} sx={{ maxWidth: 375, margin: "0 auto" }}>
           <Grid container direction="column" sx={{ px: 2, pb: 2, mt: 5 }}>
             <Grid item textAlign="center">
               <Typography variant="h3">ӾNO</Typography>
@@ -104,11 +89,6 @@ export const Home = () => {
                   <Grid item>
                     <Typography variant="subtitle1">Nano Address</Typography>
                   </Grid>
-                  {/* <Grid item>
-                    <Button onClick={pasteFromClipboard()} size="small">
-                      Paste
-                    </Button>
-                  </Grid> */}
                 </Grid>
                 <Grid item>
                   <TextField
@@ -129,30 +109,6 @@ export const Home = () => {
               <Button size="large" fullWidth variant="contained" onClick={handleSubmit}>
                 Generate
               </Button>
-              <Snackbar
-                open={snackbarState.open}
-                autoHideDuration={5000}
-                onClose={handleSnackbarClose}
-                anchorOrigin={{
-                  vertical: snackbarState.vertical,
-                  horizontal: snackbarState.horizontal,
-                }}
-              >
-                {standaloneMediaQuery ? (
-                  <Alert
-                    variant="filled"
-                    sx={{ mt: 8 }}
-                    onClose={handleSnackbarClose}
-                    severity="error"
-                  >
-                    {snackbarState.message}
-                  </Alert>
-                ) : (
-                  <Alert variant="filled" onClose={handleSnackbarClose} severity="error">
-                    {snackbarState.message}
-                  </Alert>
-                )}
-              </Snackbar>
             </Grid>
           </Grid>
         </Paper>
