@@ -1,11 +1,10 @@
-import { Box, Button, Container, Grid, InputAdornment, Paper, TextField } from "@mui/material";
 import React from "react";
-import { useParams, useSearchParams } from "react-router-dom";
-import { getNanoPrice } from "../utils/getNanoPrice";
+import { useNavigate, useParams, useSearchParams } from "react-router-dom";
+import { getNanoPrice } from "../utils/currency.helpers";
 import isValid from "nano-address-validator";
 
-import { ValidPayment } from "../components/Validpayment/index";
-import { InvalidPayment } from "../components/InvalidPayment";
+import { ValidPayment } from "../components/PaymentPage/ValidPayment";
+import { InvalidPayment } from "../components/PaymentPage/InvalidPayment";
 
 export const PaymentPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();

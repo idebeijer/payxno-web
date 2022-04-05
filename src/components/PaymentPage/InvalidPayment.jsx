@@ -1,8 +1,10 @@
 import { Box, Button, Container, Grid, InputAdornment, Paper, TextField } from "@mui/material";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
 export const InvalidPayment = () => {
+  const navigate = useNavigate();
   return (
     <Container maxWidth="xs">
       <Paper elevation={1} sx={{ maxWidth: 375, margin: "0 auto" }}>
@@ -12,12 +14,8 @@ export const InvalidPayment = () => {
             create a new one.
           </Grid>
           <Grid item>
-            <Button
-              variant="outlined"
-              startIcon={<ArrowBackIosNewRoundedIcon />}
-              onClick={() => navigate("/")}
-            >
-              Generate new
+            <Button size="large" fullWidth variant="contained" onClick={() => navigate("/")}>
+              Generate new payment card
             </Button>
           </Grid>
         </Grid>

@@ -1,74 +1,64 @@
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Grid,
-  InputAdornment,
-  Paper,
-  TextField,
-} from "@mui/material";
-import React from "react";
+import { Box, Button, Divider, Grid, InputAdornment, Skeleton, TextField } from "@mui/material";
+import React, { useState, useEffect } from "react";
 import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { getNanoPrice } from "../../utils/getNanoPrice";
+import { getNanoPrice } from "../../utils/currency.helpers";
 import { megaToRaw, rawToMega } from "nano-unit-converter";
 import { getSendURI } from "nano-uri-generator";
 import QRCode from "qrcode";
 
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
+import { OpenWalletButton } from "../OpenWalletButton";
 
-export const AmountCard = (props) => {
+export const PaymentWithAmount = (props) => {
   const navigate = useNavigate();
-
-  const [searchParams, setSearchParams] = useSearchParams();
+  const [qrcodeSrc, setQrcodeSrc] = useState("");
+  const [calcedAmount, setCalcedAmount] = useState("");
+  const [nanoPrice, setNanoPrice] = useState("");
   let params = useParams();
-
   const amount = props.amount;
   const currency = props.currency;
 
-  const calcPrice = (amount) => {
+  useEffect(() => {
     if (currency == "XNO") {
-      return amount;
+      setCalcedAmount(amount);
     } else {
-      const [nanoPrice, setNanoPrice] = React.useState("");
-      getNanoPrice(currency).then(function (response) {
+      getNanoPrice(currency).then((response) => {
         setNanoPrice(response.nano[`${currency.toLowerCase()}`]);
       });
-
-      return amount / nanoPrice;
+      setCalcedAmount((amount / nanoPrice).toFixed(5));
     }
-  };
 
-  const sendURI = getSendURI(params.address, megaToRaw(amount));
-
-  const [qrcodeSrc, setQrcodeSrc] = React.useState("");
-
-  React.useEffect(() => {
-    QRCode.toDataURL(sendURI, {
-      width: 1000,
-      margin: 0,
-      color: {
-        light: "#f0f0f0",
-      },
-    }).then((url) => {
-      setQrcodeSrc(url);
-    });
-  }, []);
+    try {
+      const xnoUri = getSendURI(params.address, megaToRaw(calcedAmount));
+      QRCode.toDataURL(xnoUri, {
+        width: 1000,
+        margin: 0,
+        color: {
+          light: "#f0f0f0",
+        },
+      }).then((url) => {
+        setQrcodeSrc(url);
+      });
+    } catch (e) {}
+  });
 
   return (
     <>
       <Grid item sx={{ pb: 2 }}>
         <Box>
-          <React.Suspense fallback="loading...">
+          {qrcodeSrc ? (
             <Box
               padding={2}
               sx={{ backgroundColor: "#f0f0f0", borderRadius: 1, margin: "0 auto" }}
               width="60%"
             >
-              {/* <QRCode bgColor="white" fgColor="black" size="300" value={sendURI} /> */}
               <img width="100%" src={qrcodeSrc}></img>
             </Box>
-          </React.Suspense>
+          ) : (
+            <Box padding={2} width="60%" height="100%" sx={{ borderRadius: 1, margin: "0 auto" }}>
+              <Skeleton variant="rectangular" width="100%" height={200}></Skeleton>
+            </Box>
+          )}
         </Box>
       </Grid>
       <Grid item sx={{ pb: 2 }}>
@@ -102,7 +92,7 @@ export const AmountCard = (props) => {
                   id=""
                   disabled
                   size="small"
-                  value={calcPrice(amount)}
+                  value={calcedAmount}
                   variant="outlined"
                   fullWidth
                   InputProps={{
@@ -129,9 +119,15 @@ export const AmountCard = (props) => {
           />
         </Grid>
       </Grid>
+      <Grid item sx={{ pb: 2 }}>
+        <OpenWalletButton address={params.address} amount={calcedAmount} />
+      </Grid>
+      <Grid item sx={{ pb: 2 }}>
+        <Divider variant="middle"></Divider>
+      </Grid>
       <Grid item>
         <Button
-          variant="outlined"
+          variant="text"
           startIcon={<ArrowBackIosNewRoundedIcon />}
           onClick={() => navigate("/")}
         >
