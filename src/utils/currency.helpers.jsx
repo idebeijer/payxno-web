@@ -9,5 +9,7 @@ export const getNanoPrice = async (currency) => {
     .then((response) => {
       return response.data;
     })
-    .catch((error) => {});
+    .catch((error) => {
+      return false;
+    });
 };

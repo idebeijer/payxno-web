@@ -12,7 +12,7 @@ LinkBehavior.propTypes = {
   href: PropTypes.oneOfType([PropTypes.func, PropTypes.object, PropTypes.string]).isRequired,
 };
 
-const darkModeEnabled = false;
+const darkModeEnabled = true;
 
 export const theme = createTheme({
   palette: {

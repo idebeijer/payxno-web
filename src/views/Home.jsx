@@ -5,7 +5,6 @@ import {
   InputAdornment,
   Paper,
   TextField,
-  Alert,
   Typography,
   Select,
   useTheme,
@@ -92,13 +91,11 @@ export const Home = () => {
                 </Grid>
                 <Grid item>
                   <TextField
-                    // label="Address"
                     size="large"
                     placeholder="nano_"
                     multiline
                     fullWidth
                     required
-                    // label="Nano address"
                     rows={4}
                     onChange={(e) => setValues({ ...values, address: e.target.value })}
                   />
