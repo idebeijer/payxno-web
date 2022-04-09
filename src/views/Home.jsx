@@ -48,7 +48,9 @@ export const Home = () => {
         <Paper elevation={2} sx={{ maxWidth: 375, margin: "0 auto" }}>
           <Grid container direction="column" sx={{ px: 2, pb: 2, mt: 5 }}>
             <Grid item textAlign="center">
-              <Typography variant="h3">ӾNO</Typography>
+              <Typography variant="h3" sx={{ my: 2 }}>
+                ӾNO
+              </Typography>
             </Grid>
             <Grid item sx={{ pb: 2 }}>
               <Grid item>

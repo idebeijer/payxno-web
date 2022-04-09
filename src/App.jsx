@@ -13,9 +13,9 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       {standaloneMediaQuery ? <Box sx={{ height: 50 }}></Box> : <></>}
-      <SnackbarProvider>
+      <SnackbarProvider anchorOrigin={{ horizontal: "center", vertical: "top" }}>
         <GlobalStyles styles={{ body: { backgroundColor: theme.palette.background.body } }} />
-        <Navbar />
+        {/* <Navbar /> */}
         <Routes>
           <Route path="/">
             <Route index element={<Home />} />
