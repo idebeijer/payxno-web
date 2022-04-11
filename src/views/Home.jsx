@@ -17,6 +17,7 @@ import { useNavigate } from "react-router-dom";
 import isValid from "nano-address-validator";
 import { Box, styled } from "@mui/system";
 import { useSnackbar } from "notistack";
+import { PaymentInfoPopover } from "../components/PaymentInfoPopover";
 
 export const Home = () => {
   const standaloneMediaQuery = useMediaQuery("(display-mode: standalone)");
@@ -48,9 +49,14 @@ export const Home = () => {
         <Paper elevation={2} sx={{ maxWidth: 375, margin: "0 auto" }}>
           <Grid container direction="column" sx={{ px: 2, pb: 2, mt: 5 }}>
             <Grid item textAlign="center">
-              <Typography variant="h3" sx={{ my: 2 }}>
-                ӾNO
-              </Typography>
+              <Box position="relative">
+                <Typography variant="h3" sx={{ my: 2 }}>
+                  ӾNO
+                </Typography>
+                <Box sx={{ position: "absolute", top: 0, right: 0 }}>
+                  <PaymentInfoPopover />
+                </Box>
+              </Box>
             </Grid>
             <Grid item sx={{ pb: 2 }}>
               <Grid item>

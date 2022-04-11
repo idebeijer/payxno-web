@@ -32,7 +32,7 @@ export const theme = createTheme({
     },
   },
   typography: {
-    fontFamily: "Open Sans",
+    fontFamily: "Montserrat, Open Sans",
   },
   components: {
     MuiLink: {
