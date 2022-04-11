@@ -6,28 +6,32 @@ import { SnackbarProvider } from "notistack";
 import { PaymentPage } from "@/views/PaymentPage";
 import { Navbar } from "@components/Navbar/Navbar";
 import { theme } from "@/theme";
+import { Head } from "./Head";
 
 function App() {
   const standaloneMediaQuery = useMediaQuery("(display-mode: standalone)");
 
   return (
-    <ThemeProvider theme={theme}>
-      {standaloneMediaQuery ? <Box sx={{ height: 50 }}></Box> : <></>}
-      <SnackbarProvider
-        maxSnack={standaloneMediaQuery ? 1 : 3}
-        anchorOrigin={{ horizontal: "center", vertical: "top" }}
-        sx={{ mt: standaloneMediaQuery ? 5 : 0 }}
-      >
-        <GlobalStyles styles={{ body: { backgroundColor: theme.palette.background.body } }} />
-        {/* <Navbar /> */}
-        <Routes>
-          <Route path="/">
-            <Route index element={<Home />} />
-            <Route exact path=":address" element={<PaymentPage />} />
-          </Route>
-        </Routes>
-      </SnackbarProvider>
-    </ThemeProvider>
+    <>
+      <Head />
+      <ThemeProvider theme={theme}>
+        {standaloneMediaQuery ? <Box sx={{ height: 50 }}></Box> : <></>}
+        <SnackbarProvider
+          maxSnack={standaloneMediaQuery ? 1 : 3}
+          anchorOrigin={{ horizontal: "center", vertical: "top" }}
+          sx={{ mt: standaloneMediaQuery ? 5 : 0 }}
+        >
+          <GlobalStyles styles={{ body: { backgroundColor: theme.palette.background.body } }} />
+          {/* <Navbar /> */}
+          <Routes>
+            <Route path="/">
+              <Route index element={<Home />} />
+              <Route exact path=":address" element={<PaymentPage />} />
+            </Route>
+          </Routes>
+        </SnackbarProvider>
+      </ThemeProvider>
+    </>
   );
 }
 
