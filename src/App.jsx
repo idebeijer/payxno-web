@@ -13,7 +13,11 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       {standaloneMediaQuery ? <Box sx={{ height: 50 }}></Box> : <></>}
-      <SnackbarProvider anchorOrigin={{ horizontal: "center", vertical: "top" }}>
+      <SnackbarProvider
+        maxSnack={standaloneMediaQuery ? 1 : 3}
+        anchorOrigin={{ horizontal: "center", vertical: "top" }}
+        sx={{ mt: standaloneMediaQuery ? 5 : 0 }}
+      >
         <GlobalStyles styles={{ body: { backgroundColor: theme.palette.background.body } }} />
         {/* <Navbar /> */}
         <Routes>
