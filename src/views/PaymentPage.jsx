@@ -1,10 +1,7 @@
 import React from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { getNanoPrice } from "../utils/currency.helpers";
+import { Navigate, useParams, useSearchParams } from "react-router-dom";
 import isValid from "nano-address-validator";
-
-import { ValidPayment } from "../components/PaymentPage/ValidPayment";
-import { InvalidPayment } from "../components/PaymentPage/InvalidPayment";
+import { ValidPayment } from "@views/ValidPayment/ValidPayment";
 
 export const PaymentPage = () => {
   const [searchParams, setSearchParams] = useSearchParams();
@@ -28,6 +25,6 @@ export const PaymentPage = () => {
   } else if (isValid(params.address) && !currency && !amount) {
     return <ValidPayment amountIsSet={false} address={params.address} />;
   } else {
-    return <InvalidPayment />;
+    return <Navigate to="/invalid" />;
   }
 };

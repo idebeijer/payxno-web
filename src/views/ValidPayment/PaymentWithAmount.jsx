@@ -1,13 +1,12 @@
 import { Box, Button, Divider, Grid, InputAdornment, Skeleton, TextField } from "@mui/material";
 import React, { useState, useEffect } from "react";
-import { useNavigate, useParams, useSearchParams } from "react-router-dom";
-import { getNanoPrice } from "../../utils/currency.helpers";
-import { megaToRaw, rawToMega } from "nano-unit-converter";
+import { useNavigate, useParams } from "react-router-dom";
+import { getNanoPrice } from "@services/currency.service";
+import { megaToRaw } from "nano-unit-converter";
 import { getSendURI } from "nano-uri-generator";
 import QRCode from "qrcode";
-
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
-import { OpenWalletButton } from "../OpenWalletButton";
+import { OpenWalletButton } from "@components/OpenWalletButton";
 
 export const PaymentWithAmount = (props) => {
   const navigate = useNavigate();
@@ -66,7 +65,7 @@ export const PaymentWithAmount = (props) => {
       </Grid>
       <Grid item sx={{ pb: 2 }}>
         <Grid item container direction="row" wrap="nowrap" sx={{ mb: 2 }}>
-          <Grid item>
+          <Grid item sx={{ width: "100%" }}>
             <TextField
               id=""
               value={amount}

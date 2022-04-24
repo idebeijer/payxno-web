@@ -1,12 +1,12 @@
 import React from "react";
 import { Route, Routes } from "react-router-dom";
 import { Home } from "@/views/Home";
-import { GlobalStyles, ThemeProvider, Paper, useMediaQuery, Box } from "@mui/material";
+import { GlobalStyles, ThemeProvider, useMediaQuery, Box } from "@mui/material";
 import { SnackbarProvider } from "notistack";
 import { PaymentPage } from "@/views/PaymentPage";
-import { Navbar } from "@components/Navbar/Navbar";
 import { theme } from "@/theme";
 import { Head } from "./Head";
+import { InvalidPayment } from "@views/InvalidPayment";
 
 function App() {
   const standaloneMediaQuery = useMediaQuery("(display-mode: standalone)");
@@ -22,11 +22,11 @@ function App() {
           sx={{ mt: standaloneMediaQuery ? 5 : 0 }}
         >
           <GlobalStyles styles={{ body: { backgroundColor: theme.palette.background.body } }} />
-          {/* <Navbar /> */}
           <Routes>
             <Route path="/">
               <Route index element={<Home />} />
-              <Route exact path=":address" element={<PaymentPage />} />
+              <Route path=":address" element={<PaymentPage />} />
+              <Route path="invalid" element={<InvalidPayment />} />
             </Route>
           </Routes>
         </SnackbarProvider>
