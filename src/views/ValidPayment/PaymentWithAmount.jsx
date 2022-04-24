@@ -12,6 +12,7 @@ export const PaymentWithAmount = (props) => {
   const navigate = useNavigate();
   const [qrcodeSrc, setQrcodeSrc] = useState("");
   const [calcedAmount, setCalcedAmount] = useState("");
+  const [rawNanoAmount, setRawNanoAmount] = useState("");
   const [nanoPrice, setNanoPrice] = useState("");
   let params = useParams();
   const amount = props.amount;
@@ -29,6 +30,7 @@ export const PaymentWithAmount = (props) => {
 
     try {
       const xnoUri = getSendURI(params.address, megaToRaw(calcedAmount));
+      setRawNanoAmount(megaToRaw(calcedAmount));
       QRCode.toDataURL(xnoUri, {
         width: 1000,
         margin: 0,
@@ -119,7 +121,7 @@ export const PaymentWithAmount = (props) => {
         </Grid>
       </Grid>
       <Grid item sx={{ pb: 2 }}>
-        <OpenWalletButton address={params.address} amount={calcedAmount} />
+        <OpenWalletButton address={params.address} amount={rawNanoAmount} />
       </Grid>
       <Grid item sx={{ pb: 2 }}>
         <Divider variant="middle"></Divider>
