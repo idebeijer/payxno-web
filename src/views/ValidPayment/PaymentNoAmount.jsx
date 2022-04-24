@@ -1,25 +1,15 @@
-import {
-  Box,
-  Button,
-  Container,
-  Divider,
-  Grid,
-  InputAdornment,
-  Paper,
-  TextField,
-} from "@mui/material";
+import { Box, Button, Divider, Grid, TextField } from "@mui/material";
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
 import { getSendURI } from "nano-uri-generator";
 import QRCode from "qrcode";
 import ArrowBackIosNewRoundedIcon from "@mui/icons-material/ArrowBackIosNewRounded";
-import { OpenWalletButton } from "../OpenWalletButton";
+import { OpenWalletButton } from "@components/OpenWalletButton";
 
 export const PaymentNoAmount = () => {
   const navigate = useNavigate();
   let params = useParams();
   const sendURI = getSendURI(params.address);
-
   const [qrcodeSrc, setQrcodeSrc] = React.useState("");
 
   useEffect(() => {

@@ -1,8 +1,7 @@
 import { Container, Grid, Paper } from "@mui/material";
 import React from "react";
-
-import { PaymentWithAmount } from "./PaymentWithAmount";
-import { PaymentNoAmount } from "./PaymentNoAmount";
+import { PaymentWithAmount } from "@views/ValidPayment/PaymentWithAmount";
+import { PaymentNoAmount } from "@views/ValidPayment/PaymentNoAmount";
 
 export const ValidPayment = (props) => {
   return (

@@ -7,23 +7,19 @@ import {
   TextField,
   Typography,
   Select,
-  useTheme,
   MenuItem,
-  useMediaQuery,
   Divider,
 } from "@mui/material";
 import React from "react";
 import { useNavigate } from "react-router-dom";
 import isValid from "nano-address-validator";
-import { Box, styled } from "@mui/system";
+import { Box } from "@mui/system";
 import { useSnackbar } from "notistack";
-import { PaymentInfoPopover } from "../components/PaymentInfoPopover";
+import { PaymentInfoPopover } from "@components/PaymentInfoPopover";
 
 export const Home = () => {
-  const standaloneMediaQuery = useMediaQuery("(display-mode: standalone)");
   const navigate = useNavigate();
   const { enqueueSnackbar } = useSnackbar();
-  const theme = useTheme();
 
   const [values, setValues] = React.useState({
     amount: "",
